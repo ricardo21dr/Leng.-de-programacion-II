@@ -1,0 +1,37 @@
+CREATE DATABASE datos_generales
+ -- Tabla de centros de trabajo
+CREATE TABLE Centros_Trabajo (
+    Numero_Centro INT PRIMARY KEY,
+    Nombre_Centro VARCHAR(100) NOT NULL,
+    Ciudad_Centro VARCHAR(100) NOT NULL
+);
+
+
+User datos_generales
+x|-- TABLA DE EMPLEADOS
+CREATE TABLE Datos_Empleados ( 
+Num_Empleado INT PRIMARY KEY IDENTITY(1,1), 
+Nombre VARCHAR(50) NOT NULL, 
+Apellido_Paterno VARCHAR(50) NOT NULL, 
+Apellido_Materno VARCHAR(50) NOT NULL, 
+Fecha_Nacimiento DATE NOT NULL, 
+RFC AS (UPPER (SUBSTRING(Apellido_paterno, 1,2) + SUBSTRING (Apellido_Materno, 1,1) + 
+SUBSTRING (Nombre, 1,1) + 
+FORMAT (Fecha_Nacimiento, 'yyMMdd'))),
+Centro_Trabajo INT  NOT NULL, 
+Puesto VARCHAR(50) NOT NULL, 
+Descripcion_Puesto VARCHAR(100) NOT NULL, 
+Directivo BIT NOT NULL 
+);
+-- Tabla de directivos
+CREATE TABLE Directivos (
+    Num_Empleado INT PRIMARY KEY,
+    Centro_Supervisado INT NOT NULL,
+    Prestacion_Combustible BIT NOT NULL,
+    FOREIGN KEY (Num_Empleado) REFERENCES Datos_Empleados(Num_Empleado)
+        ON DELETE CASCADE
+);
+
+
+INSERT INTO DBO.Datos_Empleados (Num_Empleado,Nombre,Apellido_Paterno,Apellido_Materno,Fecha_Nacimiento,Centro_Trabajo,Puesto,Descripcion_Puesto,Directivo)
+VALUES ('JESUS RICARDO', 'DIAZ','ROJAS','1997/01/21','303625','COMPRADOR','CONTRATAR LA MANO DE OBRA ELECTRICA PARA REMODELACIONES Y TIENDAS NUEVAS','0');
